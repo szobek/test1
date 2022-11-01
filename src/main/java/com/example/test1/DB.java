@@ -8,37 +8,48 @@ import java.sql.*;
 public class DB {
 
 
-
     private static final String DATABASE_URL = "jdbc:mysql://szobekweb.hu:3306/szobekwe_wp1";
     private static final String DATABASE_USERNAME = "szobekwe_java";
     private static final String DATABASE_PASSWORD = "BN^%H7$-(U7T";
-
+    Connection connection;
     private final ObservableList<Cars> data = FXCollections.observableArrayList();
-    // private final ObservableList<Person> data = FXCollections.observableArrayList();
-    //
-    //    @FXML
-    public void insertData() {
+private final ObservableList<carRoute> routesList= FXCollections.observableArrayList();
+    public DB() {
         try {
-            Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO todo  (content, user_id) VALUES ('z',5)");
-            preparedStatement.executeUpdate();
+            connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void insertData(Cars car) {
+        try {
+            String frsz = car.getFrsz();
+            String vin = car.getVin();
+            String query = " insert into cars (frsz,vin)"
+                    + " values (?, ?)";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+preparedStatement.setString(1,frsz);
+preparedStatement.setString(2,vin);
+
+
+            preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
 
-    public void getData() {
-
+    public void getFrsz() {
         try {
-            Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM todo");
+            ResultSet rs = st.executeQuery("SELECT * FROM cars");
 
             while (rs.next()) {
                 String frsz = rs.getString("frsz");
                 String vin = rs.getString("vin");
-                data.add(new Cars(frsz,vin,"","","",1,1368.0,1));
+                data.add(new Cars(frsz, vin, "", "", "", 1, 1368.0, 1));
 
             }
             st.close();
@@ -48,12 +59,28 @@ public class DB {
         }
     }
 
-    public ObservableList<Cars> fn(){
-        getData();
+    public void getData() {
 
-        return data;
     }
 
+    public ObservableList<Cars> getCars() {
+getFrsz();
+        return data;
+    }
+    public void getRotesByCarId(int carId){
+        try {
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM routes");
+
+            while (rs.next()) {
+                routesList.add(new carRoute(100,0));
+            }
+            st.close();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 
 
 }

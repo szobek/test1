@@ -20,8 +20,8 @@ public class HelloApplication extends Application {
         DB db = new DB();
         db.getData();
 HelloController helloController = fxmlLoader.getController();
-helloController.setLabel();
 helloController.setFrszTable();
+
     }
 
     public static void main(String[] args) {
