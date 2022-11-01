@@ -1,11 +1,9 @@
 package com.example.test1;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class DB {
 
@@ -15,6 +13,10 @@ public class DB {
     private static final String DATABASE_USERNAME = "szobekwe_java";
     private static final String DATABASE_PASSWORD = "BN^%H7$-(U7T";
 
+    private final ObservableList<Cars> data = FXCollections.observableArrayList();
+    // private final ObservableList<Person> data = FXCollections.observableArrayList();
+    //
+    //    @FXML
     public void insertData() {
         try {
             Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
@@ -32,15 +34,11 @@ public class DB {
             Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM todo");
-                ArrayList<Cars> t= new ArrayList<Cars>();
+
             while (rs.next()) {
-                int id = rs.getInt("id");
                 String frsz = rs.getString("frsz");
                 String vin = rs.getString("vin");
-                t.add(new Cars(frsz,vin,"","","",1,1368.0,1));
-//                Cars newcar = new Cars("","","","","",1,1368.0,1);
-                // print the results
-                //System.out.format("%s, %s, %s\n", id, frsz, vin);
+                data.add(new Cars(frsz,vin,"","","",1,1368.0,1));
 
             }
             st.close();
@@ -48,6 +46,12 @@ public class DB {
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    public ObservableList<Cars> fn(){
+        getData();
+
+        return data;
     }
 
 

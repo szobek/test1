@@ -1,17 +1,13 @@
 package com.example.test1;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
 
 
 public class HelloApplication extends Application {
-
-    @FXML  Label label;
 
 
     @Override
@@ -21,7 +17,11 @@ public class HelloApplication extends Application {
         stage.setTitle("Tesztelés");
         stage.setScene(scene);
         stage.show();
-        System.out.println(label);
+        DB db = new DB();
+        db.getData();
+HelloController helloController = fxmlLoader.getController();
+helloController.setLabel();
+helloController.setFrszTable();
     }
 
     public static void main(String[] args) {
