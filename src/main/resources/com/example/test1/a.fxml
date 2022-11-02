@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -14,11 +15,11 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView fx:id="frszTable" layoutX="-56.0" layoutY="-63.0" prefHeight="345.0" prefWidth="116.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="frszTable" layoutX="-56.0" layoutY="-63.0"  prefHeight="345.0" prefWidth="116.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <placeholder>
                           <Label text="Nincs adat." />
                       </placeholder>
-                      <columns > </columns>
+                      <columns> </columns>
                   </TableView>
                </children>
             </AnchorPane>
