@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 
@@ -19,8 +20,8 @@ public class HelloApplication extends Application {
         stage.show();
         DB db = new DB();
         db.getData();
-HelloController helloController = fxmlLoader.getController();
-helloController.setFrszTable();
+        HelloController helloController = fxmlLoader.getController();
+        helloController.setFrszTable();
 
     }
 

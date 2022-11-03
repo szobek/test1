@@ -2,24 +2,37 @@ package com.example.test1;
 
 
 import javafx.collections.ObservableList;
+import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 
 
-
 public class HelloController {
 
     @FXML
     TableView frszTable;
+    @FXML
+    TableView routeTable;
+    private EventTarget target;
 
     @FXML
-    public void clickItem(MouseEvent event)
-    {
-        System.out.println(event.getSource());
+    void onClickTableView(MouseEvent event) {
+        System.out.println(getValueAt(frszTable));
+       // setRouteTable(getValueAt(frszTable));
+
+    }
+
+    public static String getValueAt(TableView table) {
+        TablePosition tp = table.getFocusModel().getFocusedCell();
+        Object item = table.getItems().get(tp.getRow());
+        TableColumn col = tp.getTableColumn();
+        String data = (String) col.getCellObservableValue(item).getValue();
+        return data;
     }
 
     public void setFrszTable() {
@@ -30,15 +43,11 @@ public class HelloController {
         vinCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-
-frszCol.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-    System.out.println("ez választva");
-        }
-) ;
-
         frszCol.setCellValueFactory(new PropertyValueFactory<Cars, String>("frsz"));
         vinCol.setCellValueFactory(new PropertyValueFactory<Cars, String>("vin"));
-        frszTable.getColumns().addAll(frszCol,vinCol);
+
+
+        frszTable.getColumns().addAll(frszCol, vinCol);
 
         DB r = new DB();
         ObservableList data = r.getCars();
@@ -47,6 +56,23 @@ frszCol.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 
     }
 
+    public void setRouteTable(String frsz) {
+        routeTable.getColumns().clear();
+        TableColumn vinCol = new TableColumn("Út");
 
+        vinCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        vinCol.setCellValueFactory(new PropertyValueFactory<carRoute, String>("route") );
+
+
+        routeTable.getColumns().addAll(vinCol);
+        DB r = new DB();
+
+        ObservableList data = r.getRoutes(frsz);
+
+        routeTable.setItems(data);
+
+    }
+
+// // routeTable
 }
 

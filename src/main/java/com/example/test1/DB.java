@@ -13,7 +13,8 @@ public class DB {
     private static final String DATABASE_PASSWORD = "BN^%H7$-(U7T";
     Connection connection;
     private final ObservableList<Cars> data = FXCollections.observableArrayList();
-private final ObservableList<carRoute> routesList= FXCollections.observableArrayList();
+    private final ObservableList<carRoute> routesList = FXCollections.observableArrayList();
+
     public DB() {
         try {
             connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
@@ -26,12 +27,11 @@ private final ObservableList<carRoute> routesList= FXCollections.observableArray
         try {
             String frsz = car.getFrsz();
             String vin = car.getVin();
-            String query = " insert into cars (frsz,vin)"
-                    + " values (?, ?)";
+            String query = " insert into cars (frsz,vin)" + " values (?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-preparedStatement.setString(1,frsz);
-preparedStatement.setString(2,vin);
+            preparedStatement.setString(1, frsz);
+            preparedStatement.setString(2, vin);
 
 
             preparedStatement.execute();
@@ -64,19 +64,26 @@ preparedStatement.setString(2,vin);
     }
 
     public ObservableList<Cars> getCars() {
-getFrsz();
+        getFrsz();
         return data;
     }
-    public void getRotesByCarId(int carId){
+
+    public ObservableList<carRoute> getRoutes(String frsz) {
+        getRoutesByCarFrsz(frsz);
+        return routesList;
+    }
+
+    public void getRoutesByCarFrsz(String frsz) {
         try {
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM routes");
+            ResultSet rs = st.executeQuery("SELECT * FROM routes WHERE frsz='"+frsz+"'");
 
             while (rs.next()) {
-                routesList.add(new carRoute(100,0));
+                String cr = rs.getString("frsz");
+                Integer km = rs.getInt("route");
+                routesList.add(new carRoute(km, cr));
             }
             st.close();
-
         } catch (SQLException e) {
             System.out.println(e);
         }
