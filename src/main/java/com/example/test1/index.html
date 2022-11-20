@@ -2,34 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
-<table id="frszTable">
-    <thead>
-    <tr>
-        <th>frsz</th>
-        <th>vin</th>
-    </tr>
-   </thead>
-    <tbody>
-    <tr>
-        <td class="row" data-cell="abc-123">ABC-123</td>
-    </tr>
-    <tr>
-        <td class="row" data-cell="DEF-456">DEF-456</td>
-    </tr>
-    </tbody>
-</table>
+<label for="username">Felhasználónév</label>
+<input type="text" name="username" id="username">
+<label for="password">Jelszó</label>
+<input type="password" name="password" id="password">
+<button>Bejelentkezés</button>
 
 </body>
-<script>
-    [...document.querySelectorAll("#frszTable .row")].map(element =>{
-    element.addEventListener("click",function(){
-    alert("a cella: "+element.dataset.cell)
-    })
-    })
-
-</script>
 
 </html>
